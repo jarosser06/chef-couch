@@ -1,0 +1,29 @@
+---
+driver_plugin: vagrant
+
+
+platforms:
+- name: centos-6.6
+  run_list:
+  - recipe[erlang::esl]
+- name: centos-7.0
+  run_list:
+  - recipe[yum-epel]
+  - recipe[erlang::esl]
+- name: ubuntu-12.04
+  run_list:
+  - recipe[apt]
+  - recipe[erlang::esl]
+- name: ubuntu-14.04
+  run_list:
+  - recipe[apt]
+  - recipe[erlang::esl]
+
+
+suites:
+- name: source
+  run_list:
+  - recipe[couch-test::source]
+- name: lwrps
+  run_list:
+  - recipe[couch-test::lwrps]
