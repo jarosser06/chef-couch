@@ -39,11 +39,15 @@ class Chef
       def install_from_source
         install_dev_packages
 
+        group 'couchdb'
+
         user 'couchdb' do
           comment 'couchdb admin'
           manage_home false
           system true
-          home new_resource.path_prefix
+          gid 'couchdb'
+          home ::File.join(new_resource.path_prefix,
+                           '/var/lib')
         end
 
         directory new_resource.path_prefix do
@@ -67,6 +71,14 @@ class Chef
           version new_resource.source_version
           prefix_root Chef::Config[:file_cache_path]
           autoconf_opts conf_opts
+          owner 'couchdb'
+          group 'couchdb'
+          notifies :run, 'execute[set_couch_source_perms]', :immediately
+        end
+
+        execute 'set_couch_source_perms' do
+          action :nothing
+          command "chown -R couchdb:couchdb #{new_resource.path_prefix}"
         end
       end
 
