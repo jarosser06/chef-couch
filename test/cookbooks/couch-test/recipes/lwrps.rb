@@ -15,3 +15,15 @@ couch_replication 'mydb' do
   target 'mydb2'
   continuous true
 end
+
+sample_doc = {
+  'first_name' => 'Stirling',
+  'last_name' => 'Archer',
+  'occupation' => 'Spy'
+}
+
+couch_query 'add_document' do
+  urn '/mydb/'
+  body sample_doc
+  response_code '201'
+end

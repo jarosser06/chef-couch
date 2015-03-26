@@ -105,10 +105,16 @@ Creates a couchdb database
 
 #### actions
 
-- **execute** - Executes a query
+- **get** - Executes a Get query
+- **put** - Executes a put query
+- **post** - Executes a post query
+- **delete** - Executes a delete query
 
 #### attributes
 
+- **urn** - the urn to use for the query (defaults to the name attribute)
+- **body** - the body to send to couchdb
+- **response_code** - expected http response code from the query
 - **host** - the host to make the call to
 - **port** - the port to use when making the rest call
 - **admin** - the admin user to use
