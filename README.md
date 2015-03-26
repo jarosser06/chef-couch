@@ -2,6 +2,9 @@ Couch Cookbook
 ==============
 This cookbook installs and configures the CouchDB Service.
 
+Currently it only supports installing CouchDB from source however
+there are plans to use existing OS packages.
+
 Requirements
 ------------
 #### Cookbooks
