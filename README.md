@@ -40,7 +40,7 @@ Resource/Provider
 
 - **port** - the port to bind the couchdb service to, defaults to 5984
 - **bind_address** - the bind address for the couchdb service, defaults to 127.0.0.1
-- **from_source** - whether to install couchdb from source
+- **from_package** - whether to install couchdb from package, defaults to false (Unsupported on RHEL)
 - **source_version** - the version of couchdb to install from source
 - **source_url** - the url to download the source from
 - **source_checksum** - the sha256 checksum of the source package

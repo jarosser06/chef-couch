@@ -1,6 +1,5 @@
 couch_service 'default' do
   action [:create, :start]
-  from_source true
 end
 
 couch_database 'mydb' do

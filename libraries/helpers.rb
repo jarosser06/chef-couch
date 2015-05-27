@@ -3,17 +3,29 @@ require 'chef'
 module Couch
   module Helpers
     def local_ini_file
-      if new_resource.from_source
-        local_ini_file = ::File.join(new_resource.path_prefix,
-                                     'etc/couchdb/local.ini')
+      ini_file = '/etc/couchdb/local.ini'
+      if new_resource.from_package
+        return ini_file
+      else
+        return ::File.join(new_resource.path_prefix, ini_file)
       end
-      local_ini_file
     end
 
     def local_ini_dir(service_resource)
-      if service_resource.from_source
-        local_ini_dir = ::File.join(service_resource.path_prefix,
-                                    'etc/couchdb/local.d')
+      dir = '/etc/couchdb/local.d'
+      if service_resource.from_package
+        return dir
+      else
+        return ::File.join(service_resource.path_prefix, dir)
+      end
+    end
+
+    def couch_package
+      case node['platform_family']
+      when 'debian'
+        'couchdb'
+      when 'fedora'
+        'couchdb'
       end
     end
 
