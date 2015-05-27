@@ -1,5 +1,6 @@
 couch_service 'default' do
   action [:create, :start]
+  from_package true
 end
 
 couch_config 'test_config' do

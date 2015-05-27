@@ -11,14 +11,17 @@ class Chef
       use_inline_resources if defined?(use_inline_resources)
 
       action :create do
-        if new_resource.from_source
-          install_from_source
+        if new_resource.from_package
+          ## Yum Epel no longer has couchdb and its not in the core
+          raise 'Unsupported platform for package install' if node.platform == 'rhel'
+          package couch_package do
+            action :install
+          end
         else
-          install_from_package
+          install_from_source
         end
 
         configure_local_ini
-
         # Create a file that gets added to the end of the config
         # chain for Couchdb so CouchDB will write to it
         file ::File.join(local_ini_dir(new_resource), 'z_couch_config.ini') do
@@ -27,12 +30,14 @@ class Chef
       end
 
       action :delete do
-        if new_resource.from_source
+        if new_resource.from_package
+          package couch_package do
+            action :remove
+          end
+        else
           directory new_resource.path_prefix do
             action :delete
           end
-        else
-          #TODO: Implement remove from package
         end
       end
 
@@ -106,7 +111,7 @@ class Chef
       end
 
       def install_dev_packages
-        # EPEL is needed by the dev packages
+        # Dev packages require yum-epel
         if %w(rhel fedora).include? node['platform_family']
           recipe_eval do
             run_context.include_recipe('yum-epel')
