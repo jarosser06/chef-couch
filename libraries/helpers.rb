@@ -39,6 +39,7 @@ module Couch
           'ubuntu' => {
             '10.04' => 'xulrunner-dev',
             '14.04' => 'libmozjs185-dev',
+            '15.04' => 'libmozjs185-dev',
             'default' => 'libmozjs-dev'
           })
       when 'rhel', 'fedora'

@@ -25,6 +25,8 @@ class Chef
         # Create a file that gets added to the end of the config
         # chain for Couchdb so CouchDB will write to it
         file ::File.join(local_ini_dir(new_resource), 'z_couch_config.ini') do
+          owner 'couchdb'
+          group 'couchdb'
           action :create_if_missing
         end
       end
